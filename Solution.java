@@ -1,21 +1,37 @@
-package arrayrotate;
+package Try.findPath;
 
+import java.util.ArrayList;
+
+ class TreeNode {
+ int val = 0;
+ TreeNode left = null;
+ TreeNode right = null;
+
+ public TreeNode(int val) {
+ this.val = val;
+
+ }
+
+ }
 public class Solution {
-    public static void rotate(int[] nums, int k) {
-        int len=nums.length*2;
-        int[] arr=new int[len];
-        System.arraycopy(nums,0,arr,0,nums.length);
-        System.arraycopy(nums,0,arr,nums.length,nums.length);
-        int count=0;
-        int i=nums.length-k;
-        while(count<nums.length){
-            System.out.print(arr[i]);
-            i++;
-            count++;
-        }
+    private ArrayList<ArrayList<Integer>> endlist=new ArrayList<>();//成员变量
+    private ArrayList<Integer> list=new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int target) {
+        //ArrayList<Integer> list=new ArrayList<>();
 
-    }public static void main(String[] args){
-        int[] arr={1,2,3,4,5};
-        rotate(arr,2);
+        //findPath(root,target);
+        if(root==null){//如果到了叶子节点之后，就返回链表
+            return endlist;
+        }
+        list.add(root.val);//否则添加
+        target-=root.val;//还剩的数字
+        if(target==0&&root.left==null&&root.right==null){
+            endlist.add(new ArrayList<Integer>(list));
+        }
+        FindPath(root.left,target);
+        FindPath(root.right,target);
+        list.remove(list.size()-1);
+        return endlist;
     }
+
 }
